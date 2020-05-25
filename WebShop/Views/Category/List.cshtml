@@ -1,0 +1,27 @@
+﻿@model List<CategoryModel>
+
+<a asp-controller="Category" asp-action="Create">Pievienot jaunu</a>
+@if (Model.Count == 0)
+{
+    <h3>No categories!</h3>
+}
+else
+{
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Category name</th>
+            <th>Parent category ID</th>
+            <th></th>
+        </tr>
+        @foreach (var cat in Model)
+        {
+            <tr>
+                <td>@cat.Id</td>
+                <td>@cat.Name</td>
+                <td>@cat.ParentId</td>
+                <td><a asp-controller="Category" asp-action="Delete" asp-route-id="@cat.Id">Dzēst</a></td>
+            </tr>
+        }
+    </table>
+}

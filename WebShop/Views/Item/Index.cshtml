@@ -1,0 +1,48 @@
+﻿@model HomeModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+    <div class="row">
+        <div class="col-sm-4">
+            @foreach (var category in Model.Categories.Where(c => c.ParentId == null))
+            {
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                        @category.Name
+                    </a>
+                    @foreach (var subcategory in Model.Categories.Where(c => c.ParentId == category.Id))
+                    {
+                        <a class="list-group-item" asp-controller="Item" asp-action="Index" asp-route-id="@subcategory.Id">@subcategory.Name<span class="badge">@subcategory.ItemCount</span></a>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="col-sm-8">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Electronics</a></li>
+                <li class="active">Mobile</li>
+            </ol>
+            <div>
+                <div class="row">
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="@item.Image" />
+                                <div class="caption text-center">
+                                    <h3>@item.Name</h3>
+                                    <p>Price: <span>@item.Price</span></p>
+                                        @if (Context.Session.GetUserName() != null)
+                                        {
+                                            <p><a class="btn btn-primary" role="button" asp-controller="Item" asp-action="Buy" asp-route-id="@item.Id">Add to cart</a></p>
+                                        }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>

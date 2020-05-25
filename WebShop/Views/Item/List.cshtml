@@ -1,0 +1,29 @@
+﻿@model List<ItemModel>
+
+<a asp-controller="Item" asp-action="Create">Pievienot jaunu</a>
+@if (Model.Count == 0)
+{
+    <h3>No items!</h3>
+}
+else
+{
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Item name</th>
+            <th>Category ID</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.CategoryId</td>
+                <td>@item.Price</td>
+                <td><a asp-controller="Item" asp-action="Delete" asp-route-id="@item.Id">Dzēst</a></td>
+            </tr>
+        }
+    </table>
+}
